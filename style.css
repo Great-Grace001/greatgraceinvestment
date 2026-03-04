@@ -40,10 +40,10 @@ body{
 .hero-media{flex:1;display:flex;justify-content:flex-end}
 .hero-img{max-width:560px;width:100%;height:auto;border-radius:10px;object-fit:cover}
 
-.hero-content h1{font-size:clamp(36px,6vw,76px);line-height:0.95;margin:0 0 18px;font-weight:800;color:var(--navy)}
-.hero-content .lead{color:#596275;font-size:1.05rem;max-width:540px;margin-bottom:24px}
-.btn-primary{display:inline-block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700}
-.btn-primary:hover{background:#08305a}
+.hero-content h1{font-size:clamp(28px,4.5vw,48px);line-height:1.05;margin:0 0 14px;font-weight:700;color:var(--navy);letter-spacing: -0.01em}
+.hero-content .lead{color:#5b6b7a;font-size:1rem;max-width:540px;margin-bottom:20px}
+.btn-primary{display:inline-block;background:#334155;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;box-shadow:var(--shadow-custom)}
+.btn-primary:hover{background:#253245}
 
 /* Floating actions */
 .chat-btn,.notify-btn{position:fixed;z-index:80;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:999px;background:#fff;box-shadow:0 6px 18px rgba(11,43,107,0.12);color:var(--accent);text-decoration:none}
@@ -72,14 +72,14 @@ body{
 
 /* Hero specific styles */
 .hero{background:#fff;padding:72px 0}
-.hero .accent{color:#6b3df5}
-.hero .lead{color:#6a6f82}
-.phone-mockup{width:340px;max-width:90%;border-radius:28px;box-shadow:0 24px 60px rgba(11,43,107,0.12);overflow:visible}
-.phone-top{height:18px;background:linear-gradient(90deg,#7a4af9,#5c36f0);border-top-left-radius:28px;border-top-right-radius:28px}
-.phone-bottom{height:18px;background:linear-gradient(90deg,#7a4af9,#5c36f0);border-bottom-left-radius:28px;border-bottom-right-radius:28px}
-.phone-screen{background:#fff;border-radius:6px;margin:-18px 12px 0 12px;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+.hero .accent{color:#475569}
+.hero .lead{color:#586672}
+.phone-mockup{width:340px;max-width:90%;border-radius:20px;box-shadow:0 20px 40px rgba(15,23,42,0.06);overflow:visible}
+.phone-top{height:16px;background:linear-gradient(90deg,#f1f5f9,#e2e8f0);border-top-left-radius:20px;border-top-right-radius:20px}
+.phone-bottom{height:16px;background:linear-gradient(90deg,#f1f5f9,#e2e8f0);border-bottom-left-radius:20px;border-bottom-right-radius:20px}
+.phone-screen{background:#fff;border-radius:6px;margin:-18px 12px 0 12px;box-shadow:inset 0 1px 0 rgba(0,0,0,0.03)}
 .phone-header .balance-title{font-size:0.8rem;color:#98a0b9}
-.phone-header .balance-amount{font-weight:800;font-size:1.25rem;color:#39125b}
+.phone-header .balance-amount{font-weight:800;font-size:1.25rem;color:#2b3742}
 .phone-screen .card.daily{border-radius:12px;background:#f7f6ff;border:0;padding:12px}
 .contrib-list .contrib{padding:10px 0;border-bottom:1px dashed #f1f2f6;color:#6b6f83;font-weight:600}
 .contrib-list .contrib:last-child{border-bottom:0}

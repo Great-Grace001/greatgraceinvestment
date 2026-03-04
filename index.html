@@ -15,16 +15,16 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
+                            50: '#f7fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#475569',
+                            600: '#334155',
+                            700: '#1f2933',
+                            800: '#0f1721',
+                            900: '#071126',
                         },
                         neutral: {
                             50: '#fafafa',
@@ -64,17 +64,17 @@
             --letter-spacing-heading: -0.02em;
             --letter-spacing-body: 0px;
             --space-base: 1rem;
-            --radius-small: 10px;
-            --radius-large: 20px;
+            --radius-small: 8px;
+            --radius-large: 12px;
             --border-width: 1px;
-            --shadow-color: 124 58 237;
+            --shadow-color: 15 23 42;
             --shadow-offset-x: 0px;
-            --shadow-offset-y: 4px;
-            --shadow-blur: 24px;
-            --shadow-spread: -4px;
-            --shadow-opacity: 0.12;
-            --shadow-custom: 0 4px 24px -4px rgba(124, 58, 237, 0.12);
-            --shadow-custom-hover: 0 8px 32px -4px rgba(124, 58, 237, 0.22);
+            --shadow-offset-y: 6px;
+            --shadow-blur: 20px;
+            --shadow-spread: 0px;
+            --shadow-opacity: 0.06;
+            --shadow-custom: 0 6px 20px rgba(15,23,42,0.06);
+            --shadow-custom-hover: 0 10px 30px rgba(15,23,42,0.10);
         }
 
         .page { display: none; }
@@ -117,7 +117,7 @@
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f5f3ff; }
-        ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
     </style>
 </head>
 <body class="font-body bg-neutral-50 text-neutral-900" style="height: auto; min-height: 100%;">
@@ -127,11 +127,11 @@
     <div class="min-h-screen flex flex-col lg:flex-row">
 
         <!-- Left Panel - Illustration -->
-        <div class="hidden lg:flex lg:w-1/2 bg-primary-700 relative overflow-hidden flex-col justify-between p-14">
+        <div class="hidden lg:flex lg:w-1/2 bg-neutral-900 relative overflow-hidden flex-col justify-between p-14">
             <div class="absolute inset-0">
-                <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=900&auto=format&fit=crop&q=80" alt="savings background" class="w-full h-full object-cover opacity-20">
+                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&auto=format&fit=crop&q=80" alt="corporate meeting" class="w-full h-full object-cover opacity-30">
             </div>
-            <div class="absolute inset-0 bg-gradient-to-br from-primary-800/90 via-primary-700/80 to-primary-500/70"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-neutral-900/25 via-neutral-800/12 to-transparent"></div>
 
             <div class="relative z-10">
                 <div class="flex items-center gap-3 mb-16">
@@ -157,9 +157,9 @@
                 <div class="bg-white/10 backdrop-blur-sm rounded-large p-5 border border-white/20 col-span-2">
                     <div class="flex items-center gap-3">
                         <div class="flex -space-x-2">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-neutral-200 object-cover" alt="user">
+                            <img src="https://images.unsplash.com/photo-1557426272-1a9af27e0f76?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-neutral-200 object-cover" alt="user">
+                            <img src="https://images.unsplash.com/photo-1545996124-1f2f6b6a0d0b?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-neutral-200 object-cover" alt="user">
                         </div>
                         <p class="text-white text-sm font-medium">Join our growing community of savers</p>
                     </div>
@@ -202,7 +202,7 @@
                             <div class="relative">
                                 <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
                                 <input id="signin-password" type="password" placeholder="Enter your password" class="w-full pl-10 pr-10 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
-                                <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
+                                <button onclick="togglePasswordVisibility(this)" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600" aria-label="Toggle password visibility">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -271,7 +271,7 @@
                             <div class="relative">
                                 <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
                                 <input id="signup-password" type="password" placeholder="Create a strong password" class="w-full pl-10 pr-10 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
-                                <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
+                                <button onclick="togglePasswordVisibility(this)" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600" aria-label="Toggle password visibility">
                                     <i data-lucide="eye" class="w-4 h-4"></i>
                                 </button>
                             </div>
@@ -333,7 +333,7 @@
 
             <div class="p-4 border-t border-neutral-100">
                         <div class="flex items-center gap-3 p-3 rounded-large bg-neutral-50">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
+                    <img src="https://images.unsplash.com/photo-1545996124-1f2f6b6a0d0b?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-semibold text-neutral-900 truncate user-name">Ada Okonkwo</p>
                         <p class="text-xs text-neutral-500 truncate user-email">ada@example.com</p>
@@ -358,7 +358,7 @@
                         <i data-lucide="bell" class="w-5 h-5"></i>
                         <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-500 rounded-full"></span>
                     </button>
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover lg:hidden" alt="user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover lg:hidden" alt="user">
                 </div>
             </header>
 
@@ -366,7 +366,7 @@
             <div class="flex-1 p-4 md:p-6 lg:p-8 space-y-6 fade-in">
 
                 <!-- Balance Hero Card -->
-                <div class="bg-gradient-to-br from-primary-700 to-primary-500 rounded-large p-6 md:p-8 text-white relative overflow-hidden shadow-custom">
+                <div class="bg-gradient-to-br from-neutral-900/6 to-transparent rounded-large p-6 md:p-8 text-white relative overflow-hidden shadow-custom">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
                     <div class="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
                     <div class="relative z-10">
@@ -781,7 +781,7 @@
             </nav>
             <div class="p-4 border-t border-neutral-100">
                 <div class="flex items-center gap-3 p-3 rounded-large bg-neutral-50">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-semibold text-neutral-900 truncate user-name">Ada Okonkwo</p>
                         <p class="text-xs text-neutral-500 truncate user-email">ada@example.com</p>
@@ -1170,7 +1170,7 @@
 
                             <div onclick="selectBank(this)" class="bank-card selected flex items-center gap-4 p-4 border-2 border-primary-600 bg-primary-50 rounded-large cursor-pointer transition-all">
                                 <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
-                                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="GTBank">
+                                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="GTBank">
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-semibold text-neutral-900">Guaranty Trust Bank (GTBank)</p>
@@ -1183,7 +1183,7 @@
 
                             <div onclick="selectBank(this)" class="bank-card flex items-center gap-4 p-4 border-2 border-neutral-200 rounded-large cursor-pointer hover:border-primary-300 hover:bg-primary-50/30 transition-all">
                                 <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
-                                    <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Access Bank">
+                                    <img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Access Bank">
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-semibold text-neutral-900">Access Bank</p>
@@ -1194,7 +1194,7 @@
 
                             <div onclick="selectBank(this)" class="bank-card flex items-center gap-4 p-4 border-2 border-neutral-200 rounded-large cursor-pointer hover:border-primary-300 hover:bg-primary-50/30 transition-all">
                                 <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
-                                    <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Opay">
+                                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Opay">
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-semibold text-neutral-900">OPay (Mobile Money)</p>
@@ -1403,9 +1403,23 @@
                 alert('Please enter both email and password.');
                 return;
             }
-            // Derive a simple display name from the email local-part
-            const namePart = email.split('@')[0].split(/[._-]/)[0] || 'User';
-            const fullName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            const storedEmail = localStorage.getItem('user_email');
+            const storedPassword = localStorage.getItem('user_password');
+            if (!storedEmail || !storedPassword || email !== storedEmail) {
+                alert('No account found for this email. Please create an account first.');
+                // switch to signup tab to make it easy
+                navigateTo('auth');
+                switchAuthTab('signup');
+                return;
+            }
+            if (password !== storedPassword) {
+                alert('Invalid email or password.');
+                return;
+            }
+            const fullName = localStorage.getItem('user_fullname') || (() => {
+                const namePart = email.split('@')[0].split(/[._-]/)[0] || 'User';
+                return namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            })();
             updateUserDisplay(fullName, email);
             navigateTo('dashboard');
         } catch (err) {
@@ -1418,9 +1432,20 @@
         const first = (document.getElementById('signup-first') || {}).value || '';
         const last = (document.getElementById('signup-last') || {}).value || '';
         const email = (document.getElementById('signup-email') || {}).value || '';
+        const password = (document.getElementById('signup-password') || {}).value || '';
+        if(!email || !password) {
+            alert('Please enter an email and password to create an account.');
+            return;
+        }
         const fullName = (first || last) ? (first + (last ? ' ' + last : '')) : (email ? email.split('@')[0] : 'User');
-        updateUserDisplay(fullName, email);
-        navigateTo('dashboard');
+        // store demo credentials in localStorage (client-side demo only)
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_password', password);
+        localStorage.setItem('user_fullname', fullName);
+        alert('Account created. Please sign in to continue.');
+        // go back to auth (signin)
+        navigateTo('auth');
+        switchAuthTab('signin');
     }
 
     function switchAuthTab(tab) {
@@ -1688,6 +1713,25 @@
             const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
             el.textContent = new Intl.DateTimeFormat('en-GB', opts).format(now);
         }catch(e){ console.error('setHeaderDate error', e); }
+    }
+
+    // Toggle password visibility for inputs with the eye button
+    function togglePasswordVisibility(button){
+        try{
+            const container = button.closest('.relative') || button.parentElement;
+            if(!container) return;
+            const input = container.querySelector('input[type="password"], input[type="text"]');
+            if(!input) return;
+            const icon = button.querySelector('i');
+            if(input.type === 'password'){
+                input.type = 'text';
+                if(icon) icon.setAttribute('data-lucide','eye-off');
+            } else {
+                input.type = 'password';
+                if(icon) icon.setAttribute('data-lucide','eye');
+            }
+            lucide.createIcons();
+        }catch(e){ console.error('togglePasswordVisibility error', e); }
     }
 
     // Reset login password (client-side demo)
