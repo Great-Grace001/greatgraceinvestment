@@ -1,0 +1,104 @@
+:root{
+    --navy:#071b4a;
+    --accent:#0b2b6b;
+    --muted:#fbf7ef;
+}
+
+/* make media elements scale to their container */
+img, video, svg, canvas {
+    max-width:100%;
+    height:auto;
+    display:block;
+}
+
+*{box-sizing:border-box}
+body{
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    margin:0;
+    color:var(--navy);
+    background:#fff;
+}
+
+.container{
+    max-width:1200px;
+    width:90%; /* allow fluid resizing */
+    margin:0 auto;
+    padding:0 24px;
+}
+
+/* Header / Nav */
+.site-header{background:#fff;border-bottom:1px solid #eee}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo img{height:56px;border-radius:6px}
+.nav, .navbar-nav{display:flex;gap:22px;align-items:center}
+.nav a,.navbar-nav .nav-link{color:var(--accent);text-decoration:none;font-weight:600;font-size:0.95rem}
+
+/* Hero */
+.hero{background:var(--muted);padding:56px 0}
+.hero-inner{display:flex;align-items:center;gap:40px}
+.hero-content{flex:1;min-width:260px}
+.hero-media{flex:1;display:flex;justify-content:flex-end}
+.hero-img{max-width:560px;width:100%;height:auto;border-radius:10px;object-fit:cover}
+
+.hero-content h1{font-size:clamp(36px,6vw,76px);line-height:0.95;margin:0 0 18px;font-weight:800;color:var(--navy)}
+.hero-content .lead{color:#596275;font-size:1.05rem;max-width:540px;margin-bottom:24px}
+.btn-primary{display:inline-block;background:var(--accent);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700}
+.btn-primary:hover{background:#08305a}
+
+/* Floating actions */
+.chat-btn,.notify-btn{position:fixed;z-index:80;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:999px;background:#fff;box-shadow:0 6px 18px rgba(11,43,107,0.12);color:var(--accent);text-decoration:none}
+.chat-btn{left:20px;bottom:20px}
+.notify-btn{right:24px;bottom:56px;background:#ff4b4b;color:#fff}
+
+/* Responsive */
+@media (max-width:1000px){
+    .hero-inner{gap:20px}
+    .hero-img{max-width:420px}
+}
+@media (max-width:768px){
+    .header-inner{padding:12px 0}
+    /* allow Bootstrap navbar collapse to handle mobile */
+    .hero-inner{flex-direction:column;align-items:center;text-align:center}
+    .hero-media{order:2}
+    .hero-content{order:1}
+    .hero-img{max-width:320px}
+    .chat-btn{left:12px}
+}
+
+@media (max-width:420px){
+    .hero-content h1{font-size:36px}
+    .btn-primary{padding:12px 18px}
+}
+
+/* Hero specific styles */
+.hero{background:#fff;padding:72px 0}
+.hero .accent{color:#6b3df5}
+.hero .lead{color:#6a6f82}
+.phone-mockup{width:340px;max-width:90%;border-radius:28px;box-shadow:0 24px 60px rgba(11,43,107,0.12);overflow:visible}
+.phone-top{height:18px;background:linear-gradient(90deg,#7a4af9,#5c36f0);border-top-left-radius:28px;border-top-right-radius:28px}
+.phone-bottom{height:18px;background:linear-gradient(90deg,#7a4af9,#5c36f0);border-bottom-left-radius:28px;border-bottom-right-radius:28px}
+.phone-screen{background:#fff;border-radius:6px;margin:-18px 12px 0 12px;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+.phone-header .balance-title{font-size:0.8rem;color:#98a0b9}
+.phone-header .balance-amount{font-weight:800;font-size:1.25rem;color:#39125b}
+.phone-screen .card.daily{border-radius:12px;background:#f7f6ff;border:0;padding:12px}
+.contrib-list .contrib{padding:10px 0;border-bottom:1px dashed #f1f2f6;color:#6b6f83;font-weight:600}
+.contrib-list .contrib:last-child{border-bottom:0}
+.phone-mockup .dot{width:12px;height:12px;border-radius:50%;background:#e6e9f7}
+
+/* Steps */
+.steps .step{padding:18px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfbff);box-shadow:0 8px 24px rgba(11,43,107,0.04);margin:8px 12px}
+
+@media (max-width:992px){
+    .hero{padding:48px 0}
+    .phone-mockup{width:300px}
+}
+
+@media (max-width:768px){
+    .hero{padding:36px 0}
+    .phone-mockup{width:260px}
+    .hero-content{text-align:center}
+}
+
+/* Referral card tweaks */
+.referral-note{font-size:0.85rem;color:#6b7280}
+

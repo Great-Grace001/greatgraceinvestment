@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en" style="height: auto; min-height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Grace Investment App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link id="heading-font-link" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link id="body-font-link" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        neutral: {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['var(--font-heading-name)', 'sans-serif'],
+                        body: ['var(--font-body-name)', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        small: 'var(--radius-small)',
+                        large: 'var(--radius-large)',
+                    },
+                    boxShadow: {
+                        custom: 'var(--shadow-custom)',
+                        'custom-hover': 'var(--shadow-custom-hover)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --font-heading-name: 'Plus Jakarta Sans';
+            --font-body-name: 'Inter';
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --letter-spacing-heading: -0.02em;
+            --letter-spacing-body: 0px;
+            --space-base: 1rem;
+            --radius-small: 10px;
+            --radius-large: 20px;
+            --border-width: 1px;
+            --shadow-color: 124 58 237;
+            --shadow-offset-x: 0px;
+            --shadow-offset-y: 4px;
+            --shadow-blur: 24px;
+            --shadow-spread: -4px;
+            --shadow-opacity: 0.12;
+            --shadow-custom: 0 4px 24px -4px rgba(124, 58, 237, 0.12);
+            --shadow-custom-hover: 0 8px 32px -4px rgba(124, 58, 237, 0.22);
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .fade-in {
+            animation: fadeInUp 0.45s cubic-bezier(.4,0,.2,1) both;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-btn.active-tab {
+            color: #7c3aed;
+            border-bottom: 2.5px solid #7c3aed;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.13);
+        }
+
+        .nav-item.active-nav .nav-icon { color: #7c3aed; }
+        .nav-item.active-nav .nav-label { color: #7c3aed; font-weight: 600; }
+
+        .bank-card.selected {
+            border-color: #7c3aed;
+            background: #f5f3ff;
+        }
+
+        .step-dot.done { background: #7c3aed; }
+        .step-dot.active { background: #7c3aed; box-shadow: 0 0 0 4px #ddd6fe; }
+        .step-dot.pending { background: #e5e5e5; }
+        .step-line.done { background: #7c3aed; }
+        .step-line.pending { background: #e5e5e5; }
+
+        html { scroll-behavior: smooth; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f5f3ff; }
+        ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 99px; }
+    </style>
+</head>
+<body class="font-body bg-neutral-50 text-neutral-900" style="height: auto; min-height: 100%;">
+
+<!-- ===================== AUTH PAGE ===================== -->
+<div id="page-auth" class="page active">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+
+        <!-- Left Panel - Illustration -->
+        <div class="hidden lg:flex lg:w-1/2 bg-primary-700 relative overflow-hidden flex-col justify-between p-14">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=900&auto=format&fit=crop&q=80" alt="savings background" class="w-full h-full object-cover opacity-20">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-800/90 via-primary-700/80 to-primary-500/70"></div>
+
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-16">
+                    <div class="w-11 h-11 bg-white/20 backdrop-blur rounded-small flex items-center justify-center">
+                        <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="font-heading text-2xl font-bold text-white">Great Grace Investment</span>
+                </div>
+                <h2 class="font-heading text-5xl font-bold text-white leading-tight mb-6">Save daily.<br>Grow steadily.<br>Live freely.</h2>
+                <p class="text-primary-200 text-lg leading-relaxed max-w-sm">Join thousands of smart savers building wealth one day at a time with Great Grace Investment's automated daily contribution system.</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="relative z-10 grid grid-cols-2 gap-4">
+                <div class="bg-white/10 backdrop-blur-sm rounded-large p-5 border border-white/20">
+                    <p class="text-primary-200 text-sm mb-1">Total Saved</p>
+                    <p class="font-heading text-2xl font-bold text-white">₦2.4B+</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-large p-5 border border-white/20">
+                    <p class="text-primary-200 text-sm mb-1">Active Users</p>
+                    <p class="font-heading text-2xl font-bold text-white">50,000+</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-large p-5 border border-white/20 col-span-2">
+                    <div class="flex items-center gap-3">
+                        <div class="flex -space-x-2">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" class="w-8 h-8 rounded-full border-2 border-primary-700 object-cover" alt="user">
+                        </div>
+                        <p class="text-white text-sm font-medium">Join our growing community of savers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Auth Form -->
+        <div class="flex-1 flex flex-col justify-center items-center px-6 py-12 lg:px-16 bg-white">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden flex items-center gap-2 mb-10">
+                <div class="w-10 h-10 bg-primary-600 rounded-small flex items-center justify-center">
+                    <i data-lucide="wallet" class="w-5 h-5 text-white"></i>
+                </div>
+                <span class="font-heading text-2xl font-bold text-primary-900">Great Grace Investment</span>
+            </div>
+
+            <div class="w-full max-w-md fade-in">
+                <!-- Tabs -->
+                <div class="flex border-b border-neutral-200 mb-8">
+                    <button onclick="switchAuthTab('signin')" id="tab-signin" class="tab-btn active-tab flex-1 pb-3 text-sm font-semibold text-neutral-500 transition-all">Sign In</button>
+                    <button onclick="switchAuthTab('signup')" id="tab-signup" class="tab-btn flex-1 pb-3 text-sm font-semibold text-neutral-500 transition-all">Create Account</button>
+                </div>
+
+                <!-- Sign In Form -->
+                <div id="form-signin">
+                    <h1 class="font-heading text-3xl font-bold text-neutral-900 mb-2">Welcome back 👋</h1>
+                    <p class="text-neutral-500 mb-8">Sign in to continue your savings journey.</p>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-1.5">Email Address</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                                <input id="signin-email" type="email" placeholder="you@example.com" class="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-1.5">Password</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                                <input id="signin-password" type="password" placeholder="Enter your password" class="w-full pl-10 pr-10 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                                <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 accent-primary-600 rounded">
+                                <span class="text-sm text-neutral-600">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-primary-600 font-medium hover:text-primary-700">Forgot password?</a>
+                        </div>
+                        <button onclick="signIn()" class="w-full py-3.5 bg-primary-600 text-white rounded-small font-semibold hover:bg-primary-700 transition-all shadow-custom hover:shadow-custom-hover flex items-center justify-center gap-2">
+                            Sign In
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="my-7 flex items-center gap-4">
+                        <div class="flex-1 h-px bg-neutral-200"></div>
+                        <span class="text-xs text-neutral-400 font-medium">OR CONTINUE WITH</span>
+                        <div class="flex-1 h-px bg-neutral-200"></div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="flex items-center justify-center gap-2 py-3 border border-neutral-200 rounded-small text-sm font-medium text-neutral-700 hover:bg-neutral-50 transition-all">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-5 h-5" alt="Google">
+                            Google
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-neutral-500 mt-8">Don't have an account? <button onclick="switchAuthTab('signup')" class="text-primary-600 font-semibold hover:text-primary-700">Create one</button></p>
+                </div>
+
+                <!-- Sign Up Form -->
+                <div id="form-signup" class="hidden">
+                    <h1 class="font-heading text-3xl font-bold text-neutral-900 mb-2">Start saving today ✨</h1>
+                    <p class="text-neutral-500 mb-8">Create your free account and begin your journey.</p>
+
+                    <div class="space-y-5">
+                            <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-700 mb-1.5">First Name</label>
+                                <input id="signup-first" type="text" placeholder="Ada" class="w-full px-4 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-700 mb-1.5">Last Name</label>
+                                <input id="signup-last" type="text" placeholder="Okonkwo" class="w-full px-4 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-1.5">Email Address</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                                <input id="signup-email" type="email" placeholder="you@example.com" class="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-1.5">Phone Number</label>
+                            <div class="relative">
+                                <i data-lucide="phone" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                                <input type="tel" placeholder="+234 800 000 0000" class="w-full pl-10 pr-4 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-neutral-700 mb-1.5">Password</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                                <input id="signup-password" type="password" placeholder="Create a strong password" class="w-full pl-10 pr-10 py-3 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                                <button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600">
+                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <div class="flex gap-1.5 mt-2">
+                                <div class="h-1 flex-1 rounded-full bg-primary-400"></div>
+                                <div class="h-1 flex-1 rounded-full bg-primary-400"></div>
+                                <div class="h-1 flex-1 rounded-full bg-neutral-200"></div>
+                                <div class="h-1 flex-1 rounded-full bg-neutral-200"></div>
+                            </div>
+                            <p class="text-xs text-neutral-400 mt-1">Password strength: Medium</p>
+                        </div>
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" class="w-4 h-4 mt-0.5 accent-primary-600 rounded shrink-0">
+                            <span class="text-sm text-neutral-600">I agree to the <a href="#" class="text-primary-600 font-medium">Terms of Service</a> and <a href="#" class="text-primary-600 font-medium">Privacy Policy</a></span>
+                        </label>
+                        <button onclick="createAccount()" class="w-full py-3.5 bg-primary-600 text-white rounded-small font-semibold hover:bg-primary-700 transition-all shadow-custom hover:shadow-custom-hover flex items-center justify-center gap-2">
+                            Create Account
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-neutral-500 mt-8">Already have an account? <button onclick="switchAuthTab('signin')" class="text-primary-600 font-semibold hover:text-primary-700">Sign in</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== DASHBOARD PAGE ===================== -->
+<div id="page-dashboard" class="page">
+    <div class="flex bg-neutral-50" style="min-height: 100vh;">
+
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden lg:flex w-64 bg-white border-r border-neutral-100 flex-col" style="min-height: 100vh;">
+            <div class="p-6 border-b border-neutral-100">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-primary-600 rounded-small flex items-center justify-center">
+                        <i data-lucide="wallet" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="font-heading text-xl font-bold text-primary-900">Great Grace Investment</span>
+                </div>
+            </div>
+
+            <nav class="flex-1 p-4 space-y-1">
+                <a href="#" onclick="navigateTo('dashboard'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small bg-primary-50 text-primary-700 font-medium text-sm">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="#" onclick="navigateTo('history'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="history" class="w-5 h-5"></i> Savings History
+                </a>
+                <a href="#" onclick="navigateTo('withdrawal'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="arrow-up-from-line" class="w-5 h-5"></i> Withdraw Funds
+                </a>
+                    
+                <a href="#" onclick="navigateTo('settings'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="settings" class="w-5 h-5"></i> Settings
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-neutral-100">
+                        <div class="flex items-center gap-3 p-3 rounded-large bg-neutral-50">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-neutral-900 truncate user-name">Ada Okonkwo</p>
+                        <p class="text-xs text-neutral-500 truncate user-email">ada@example.com</p>
+                    </div>
+                    <button onclick="navigateTo('auth')" class="text-neutral-400 hover:text-neutral-600">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Top Bar -->
+            <header class="bg-white border-b border-neutral-100 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+                <div>
+                    <h1 class="font-heading text-xl font-bold text-neutral-900">Good morning, <span id="greeting-name">Ada</span> 👋</h1>
+                    <p id="header-date" class="text-xs text-neutral-500">Wednesday, 25 October 2024</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="relative w-10 h-10 rounded-full bg-neutral-50 flex items-center justify-center text-neutral-600 hover:bg-primary-50 hover:text-primary-600 transition-colors">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-500 rounded-full"></span>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover lg:hidden" alt="user">
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <div class="flex-1 p-4 md:p-6 lg:p-8 space-y-6 fade-in">
+
+                <!-- Balance Hero Card -->
+                <div class="bg-gradient-to-br from-primary-700 to-primary-500 rounded-large p-6 md:p-8 text-white relative overflow-hidden shadow-custom">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <p class="text-primary-200 text-sm mb-1">Total Savings Balance</p>
+                                <h2 class="font-heading text-4xl md:text-5xl font-bold">₦ 450,000</h2>
+                                <p class="text-primary-200 text-sm mt-1 flex items-center gap-1">
+                                    <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    +₦2,000 today
+                                </p>
+                            </div>
+                            <div class="bg-white/15 backdrop-blur rounded-large p-3">
+                                <i data-lucide="wallet" class="w-7 h-7 text-white"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="navigateTo('withdrawal')" class="flex items-center gap-2 bg-white text-primary-700 px-5 py-2.5 rounded-small text-sm font-semibold hover:bg-primary-50 transition-colors shadow-sm">
+                                <i data-lucide="arrow-up-from-line" class="w-4 h-4"></i> Withdraw
+                            </button>
+                            <button onclick="openTopUp()" class="flex items-center gap-2 bg-white/15 text-white border border-white/30 px-5 py-2.5 rounded-small text-sm font-semibold hover:bg-white/25 transition-colors">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Top Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <!-- Refer & Earn Card -->
+                <div class="bg-white rounded-large p-6 shadow-sm border border-neutral-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-neutral-500">Refer & Earn</p>
+                            <h3 class="text-lg font-heading font-bold">Share and earn cash</h3>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-neutral-500">Earnings</p>
+                            <p id="ref-earnings" class="text-xl font-bold text-primary-700">₦0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-xs text-neutral-500">Your referral code</label>
+                            <div class="mt-2 flex items-center gap-3">
+                                <div id="ref-code" class="px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-small font-semibold">--</div>
+                                <button onclick="copyReferralCode()" class="py-2 px-3 bg-primary-600 text-white rounded-small text-sm">Copy</button>
+                            </div>
+                            <label class="text-xs text-neutral-500 mt-3 block">Referral link</label>
+                            <div class="mt-2 flex items-center gap-3">
+                                <input id="ref-link" readonly class="flex-1 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-small text-sm" />
+                                <button onclick="copyReferralLink()" class="py-2 px-3 bg-primary-600 text-white rounded-small text-sm">Copy</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-neutral-500">Share</p>
+                            <div class="mt-3 flex gap-2">
+                                <button onclick="shareReferral('whatsapp')" class="py-2 px-3 bg-green-500 text-white rounded-small text-sm">WhatsApp</button>
+                                <button onclick="shareReferral('twitter')" class="py-2 px-3 bg-blue-500 text-white rounded-small text-sm">Twitter</button>
+                                <button onclick="shareReferral('facebook')" class="py-2 px-3 bg-blue-700 text-white rounded-small text-sm">Facebook</button>
+                            </div>
+                            <p class="text-xs text-neutral-400 mt-4">Note: Real payouts require backend tracking and KYC.</p>
+                            <button onclick="simulateReferral()" class="mt-3 py-2 px-3 bg-primary-50 text-primary-700 border border-primary-200 rounded-small text-sm">Simulate referral used</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- PIN setup moved to Settings -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-green-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="calendar-check" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">Active</span>
+                        </div>
+                        <p class="text-2xl font-heading font-bold text-neutral-900">15</p>
+                        <p class="text-xs text-neutral-500 mt-0.5">Days Streak</p>
+                    </div>
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-primary-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="target" class="w-5 h-5 text-primary-600"></i>
+                            </div>
+                            <span class="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full font-medium">50%</span>
+                        </div>
+                        <p class="text-2xl font-heading font-bold text-neutral-900">₦2,000</p>
+                        <p class="text-xs text-neutral-500 mt-0.5">Daily Goal</p>
+                    </div>
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-orange-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="clock" class="w-5 h-5 text-orange-500"></i>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-heading font-bold text-neutral-900">15</p>
+                        <p class="text-xs text-neutral-500 mt-0.5">Days Remaining</p>
+                    </div>
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 bg-purple-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="percent" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                        </div>
+                        <p class="text-2xl font-heading font-bold text-neutral-900">15%</p>
+                        <p class="text-xs text-neutral-500 mt-0.5">Interest Rate</p>
+                    </div>
+                </div>
+
+                <!-- Chart + Recent Activity -->
+                <div class="grid lg:grid-cols-5 gap-6">
+                    <!-- Chart -->
+                    <div class="lg:col-span-3 bg-white rounded-large p-6 shadow-custom">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="font-heading font-bold text-neutral-900">Savings Overview</h3>
+                                <p class="text-xs text-neutral-500">Last 7 days</p>
+                            </div>
+                            <select class="text-xs border border-neutral-200 rounded-small px-3 py-1.5 text-neutral-600 bg-neutral-50">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>Last 3 months</option>
+                            </select>
+                        </div>
+                        <div class="h-48 md:h-64">
+                            <canvas id="savingsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Cycle Progress -->
+                    <div class="lg:col-span-2 bg-white rounded-large p-6 shadow-custom">
+                        <h3 class="font-heading font-bold text-neutral-900 mb-1">Current Cycle</h3>
+                        <p class="text-xs text-neutral-500 mb-6">Oct 10 – Nov 10, 2024</p>
+
+                        <div class="flex justify-center mb-6">
+                            <div class="relative w-36 h-36">
+                                <svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#ede9fe" stroke-width="10"/>
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="#7c3aed" stroke-width="10" stroke-dasharray="314" stroke-dashoffset="157" stroke-linecap="round"/>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="font-heading text-2xl font-bold text-neutral-900">50%</span>
+                                    <span class="text-xs text-neutral-500">Complete</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-neutral-500">Contributed</span>
+                                <span class="font-semibold text-neutral-900">₦30,000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-neutral-500">Target</span>
+                                <span class="font-semibold text-neutral-900">₦60,000</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-neutral-500">Interest Earned</span>
+                                <span class="font-semibold text-green-600">+₦1,250</span>
+                            </div>
+                            <div class="pt-2 border-t border-neutral-100">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-neutral-500">Projected Total</span>
+                                    <span class="font-bold text-primary-700">₦61,250</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="bg-white rounded-large p-6 shadow-custom">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-heading font-bold text-neutral-900">Recent Transactions</h3>
+                        <button onclick="navigateTo('history')" class="text-sm text-primary-600 font-medium hover:text-primary-700 flex items-center gap-1">
+                            View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between py-3 border-b border-neutral-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                    <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                    <p class="text-xs text-neutral-500">Today, 9:00 AM</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold text-green-600">+₦2,000</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-neutral-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                    <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                    <p class="text-xs text-neutral-500">Yesterday, 8:45 AM</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold text-green-600">+₦2,000</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3 border-b border-neutral-50">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                                    <i data-lucide="arrow-up-right" class="w-5 h-5 text-red-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-neutral-900">Withdrawal</p>
+                                    <p class="text-xs text-neutral-500">Oct 22, 2:15 PM</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold text-red-500">-₦20,000</span>
+                        </div>
+                        <div class="flex items-center justify-between py-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                    <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                    <p class="text-xs text-neutral-500">Oct 22, 9:00 AM</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-bold text-green-600">+₦2,000</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile Bottom Nav -->
+            <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-100 z-40 flex">
+                <button onclick="navigateTo('dashboard')" class="nav-item active-nav flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="layout-dashboard" class="nav-icon w-5 h-5 text-primary-600"></i>
+                    <span class="nav-label text-xs text-primary-600 font-semibold">Home</span>
+                </button>
+                <button onclick="navigateTo('history')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="history" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">History</span>
+                </button>
+                <button onclick="navigateTo('withdrawal')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="arrow-up-from-line" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Withdraw</span>
+                </button>
+                <button onclick="navigateTo('settings')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="settings" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Settings</span>
+                </button>
+            </nav>
+        </main>
+    </div>
+</div>
+
+<!-- Top Up Modal -->
+<div id="topup-modal" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[20px] p-6 max-w-md w-full text-center shadow-2xl">
+        <h3 class="font-heading text-xl font-bold mb-3">Top Up Account Details</h3>
+        <p class="text-sm text-neutral-500 mb-4">Use the account below to top up your savings via OPAY.</p>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-small p-4 mb-4 flex items-center justify-between">
+            <div>
+                <div class="text-xs text-neutral-500">Account Number</div>
+                <div id="topup-account" class="font-semibold text-lg">7030323209 OPAY</div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button onclick="copyTopUpAccount()" class="py-2 px-3 bg-primary-600 text-white rounded-small text-sm">Copy</button>
+                <button onclick="closeTopUp()" class="py-2 px-3 border border-neutral-200 rounded-small text-sm">Close</button>
+            </div>
+        </div>
+        <p class="text-xs text-neutral-500">Reference: <span id="topup-ref" class="font-mono">-</span></p>
+    </div>
+</div>
+
+<!-- ===================== SETTINGS PAGE ===================== -->
+<div id="page-settings" class="page">
+    <div class="min-h-screen bg-neutral-50">
+        <div class="max-w-4xl mx-auto p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="font-heading text-2xl font-bold">Settings</h2>
+                    <p class="text-sm text-neutral-500">Manage your security, referrals and account.</p>
+                </div>
+                <div>
+                    <button onclick="navigateTo('dashboard')" class="py-2 px-3 bg-neutral-100 rounded-small text-sm">Back</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Edit Profile -->
+                <div class="bg-white p-6 rounded-large border border-neutral-100">
+                    <h3 class="font-semibold mb-2">Edit Profile</h3>
+                    <p class="text-sm text-neutral-500 mb-4">Update your name, email and phone number.</p>
+                    <div class="mb-3">
+                        <label class="text-xs text-neutral-600">Full name</label>
+                        <input id="profile-fullname" type="text" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="Ada Okonkwo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-xs text-neutral-600">Email</label>
+                        <input id="profile-email" type="email" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="you@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-xs text-neutral-600">Phone</label>
+                        <input id="profile-phone" type="tel" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="+234 800 000 0000">
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="saveProfile()" class="py-2 px-4 bg-primary-600 text-white rounded-small text-sm">Save Profile</button>
+                        <button onclick="loadProfileToForm()" class="py-2 px-4 border border-neutral-200 rounded-small text-sm">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Transaction PIN -->
+                <div class="bg-white p-6 rounded-large border border-neutral-100">
+                    <h3 class="font-semibold mb-2">Transaction PIN</h3>
+                    <p class="text-sm text-neutral-500 mb-4">Set or reset your 4-digit transaction PIN used for withdrawals.</p>
+                    <div class="mb-3">
+                        <label class="text-xs text-neutral-600">New 4-digit PIN</label>
+                        <input id="new-txn-pin" type="password" maxlength="4" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="••••">
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xs text-neutral-600">Confirm PIN</label>
+                        <input id="confirm-txn-pin" type="password" maxlength="4" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="••••">
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="setTransactionPin()" class="py-2 px-4 bg-primary-600 text-white rounded-small text-sm">Set PIN</button>
+                        <button onclick="clearTransactionPin()" class="py-2 px-4 border border-neutral-200 rounded-small text-sm">Reset PIN</button>
+                        <div class="ml-auto text-sm text-neutral-500 flex items-center gap-2">Status: <span id="pin-status" class="font-semibold">Not Set</span></div>
+                    </div>
+                </div>
+
+                <!-- Referral -->
+                <div class="bg-white p-6 rounded-large border border-neutral-100">
+                    <h3 class="font-semibold mb-2">Refer & Earn</h3>
+                    <p class="text-sm text-neutral-500 mb-4">Share your referral code or link with friends.</p>
+                    <div class="mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-small flex-1">
+                                <div class="text-sm font-semibold" id="ref-code">-</div>
+                                <input id="ref-link" class="w-full mt-2 text-xs text-neutral-500 bg-transparent border-0" readonly>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <button onclick="copyReferralCode()" class="py-2 px-3 bg-primary-50 text-primary-700 rounded-small text-sm">Copy Code</button>
+                                <button onclick="copyReferralLink()" class="py-2 px-3 border border-neutral-200 rounded-small text-sm">Copy Link</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <button onclick="shareReferral('whatsapp')" class="py-2 px-3 bg-green-50 text-green-700 rounded-small text-sm">WhatsApp</button>
+                        <button onclick="shareReferral('twitter')" class="py-2 px-3 bg-blue-50 text-blue-700 rounded-small text-sm">Twitter</button>
+                        <button onclick="shareReferral('facebook')" class="py-2 px-3 bg-neutral-50 text-neutral-700 border border-neutral-200 rounded-small text-sm">Facebook</button>
+                        <button onclick="simulateReferral()" class="ml-auto py-2 px-3 bg-primary-600 text-white rounded-small text-sm">Simulate +Earn</button>
+                    </div>
+                    <p class="text-xs text-neutral-500 mt-3">Earnings: <span id="ref-earnings">₦0</span></p>
+                </div>
+
+                <!-- Reset Login Password -->
+                <div class="bg-white p-6 rounded-large border border-neutral-100 md:col-span-1">
+                    <h3 class="font-semibold mb-2">Reset Login Password</h3>
+                    <p class="text-sm text-neutral-500 mb-4">Send a password reset link to your registered email.</p>
+                    <div class="mb-3">
+                        <label class="text-xs text-neutral-600">Email</label>
+                        <input id="reset-email" type="email" class="w-full mt-2 px-3 py-2 border border-neutral-200 rounded-small text-sm" placeholder="you@example.com">
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="resetLoginPassword()" class="py-2 px-4 bg-primary-600 text-white rounded-small text-sm">Send Reset Link</button>
+                    </div>
+                </div>
+
+                <!-- Sign Out -->
+                <div class="bg-white p-6 rounded-large border border-neutral-100 md:col-span-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold">Sign Out</h3>
+                            <p class="text-sm text-neutral-500">Sign out of this device. You will need to sign in again to access your account.</p>
+                        </div>
+                        <div>
+                            <button onclick="signOut()" class="py-2 px-4 bg-red-600 text-white rounded-small text-sm">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== SAVINGS HISTORY PAGE ===================== -->
+<div id="page-history" class="page">
+    <div class="flex bg-neutral-50" style="min-height: 100vh;">
+
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden lg:flex w-64 bg-white border-r border-neutral-100 flex-col" style="min-height: 100vh;">
+            <div class="p-6 border-b border-neutral-100">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-primary-600 rounded-small flex items-center justify-center">
+                        <i data-lucide="wallet" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="font-heading text-xl font-bold text-primary-900">Great Grace Investment</span>
+                </div>
+            </div>
+            <nav class="flex-1 p-4 space-y-1">
+                <a href="#" onclick="navigateTo('dashboard'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="#" onclick="navigateTo('history'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small bg-primary-50 text-primary-700 font-medium text-sm">
+                    <i data-lucide="history" class="w-5 h-5"></i> Savings History
+                </a>
+                <a href="#" onclick="navigateTo('withdrawal'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="arrow-up-from-line" class="w-5 h-5"></i> Withdraw Funds
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="settings" class="w-5 h-5"></i> Settings
+                </a>
+            </nav>
+            <div class="p-4 border-t border-neutral-100">
+                <div class="flex items-center gap-3 p-3 rounded-large bg-neutral-50">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-neutral-900 truncate user-name">Ada Okonkwo</p>
+                        <p class="text-xs text-neutral-500 truncate user-email">ada@example.com</p>
+                    </div>
+                    <button onclick="navigateTo('auth')" class="text-neutral-400 hover:text-neutral-600">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col pb-20 lg:pb-0">
+            <header class="bg-white border-b border-neutral-100 px-6 py-4 flex items-center gap-4 sticky top-0 z-30">
+                <button onclick="navigateTo('dashboard')" class="lg:hidden w-9 h-9 rounded-full bg-neutral-50 flex items-center justify-center text-neutral-600">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <div>
+                    <h1 class="font-heading text-xl font-bold text-neutral-900">Savings History</h1>
+                    <p class="text-xs text-neutral-500">All your contributions and withdrawals</p>
+                </div>
+            </header>
+
+            <div class="flex-1 p-4 md:p-6 lg:p-8 space-y-6 fade-in">
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 bg-green-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <span class="text-sm text-neutral-500">Total Saved</span>
+                        </div>
+                        <p class="font-heading text-2xl font-bold text-neutral-900">₦470,000</p>
+                        <p class="text-xs text-green-600 mt-1 flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3"></i> 235 contributions</p>
+                    </div>
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 bg-red-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5 text-red-500"></i>
+                            </div>
+                            <span class="text-sm text-neutral-500">Total Withdrawn</span>
+                        </div>
+                        <p class="font-heading text-2xl font-bold text-neutral-900">₦20,000</p>
+                        <p class="text-xs text-neutral-400 mt-1">2 withdrawals</p>
+                    </div>
+                    <div class="bg-white rounded-large p-5 shadow-custom">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 bg-primary-50 rounded-small flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-primary-600"></i>
+                            </div>
+                            <span class="text-sm text-neutral-500">Interest Earned</span>
+                        </div>
+                        <p class="font-heading text-2xl font-bold text-neutral-900">₦5,800</p>
+                        <p class="text-xs text-primary-600 mt-1">15% per annum</p>
+                    </div>
+                </div>
+
+                <!-- Filters & Search -->
+                <div class="bg-white rounded-large p-4 shadow-custom">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-1">
+                            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"></i>
+                            <input type="text" placeholder="Search transactions..." class="w-full pl-9 pr-4 py-2.5 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                        </div>
+                        <select class="px-4 py-2.5 border border-neutral-200 rounded-small text-sm text-neutral-600 bg-neutral-50">
+                            <option>All Types</option>
+                            <option>Contributions</option>
+                            <option>Withdrawals</option>
+                            <option>Interest</option>
+                        </select>
+                        <select class="px-4 py-2.5 border border-neutral-200 rounded-small text-sm text-neutral-600 bg-neutral-50">
+                            <option>All Time</option>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>Last 3 Months</option>
+                        </select>
+                        <button class="flex items-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-small text-sm text-neutral-600 hover:bg-neutral-50 transition-colors">
+                            <i data-lucide="download" class="w-4 h-4"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Transaction List -->
+                <div class="bg-white rounded-large shadow-custom overflow-hidden">
+                    <div class="p-5 border-b border-neutral-100 flex items-center justify-between">
+                        <h3 class="font-heading font-bold text-neutral-900">All Transactions</h3>
+                        <span class="text-xs text-neutral-500 bg-neutral-100 px-3 py-1 rounded-full">237 records</span>
+                    </div>
+
+                    <!-- Month Group: October 2024 -->
+                    <div>
+                        <div class="px-5 py-3 bg-neutral-50 border-b border-neutral-100">
+                            <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">October 2024</p>
+                        </div>
+                        <div class="divide-y divide-neutral-50">
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                        <p class="text-xs text-neutral-500">Oct 25, 2024 · 9:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-green-600">+₦2,000</p>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                        <p class="text-xs text-neutral-500">Oct 24, 2024 · 8:45 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-green-600">+₦2,000</p>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-red-500"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Withdrawal to GTBank</p>
+                                        <p class="text-xs text-neutral-500">Oct 22, 2024 · 2:15 PM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-red-500">-₦20,000</p>
+                                    <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="sparkles" class="w-5 h-5 text-primary-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Interest Credit</p>
+                                        <p class="text-xs text-neutral-500">Oct 20, 2024 · 12:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-primary-600">+₦1,250</p>
+                                    <span class="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full">Interest</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                        <p class="text-xs text-neutral-500">Oct 19, 2024 · 9:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-green-600">+₦2,000</p>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Month Group: September 2024 -->
+                    <div>
+                        <div class="px-5 py-3 bg-neutral-50 border-b border-neutral-100 border-t border-t-neutral-100">
+                            <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">September 2024</p>
+                        </div>
+                        <div class="divide-y divide-neutral-50">
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                        <p class="text-xs text-neutral-500">Sep 30, 2024 · 9:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-green-600">+₦2,000</p>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="sparkles" class="w-5 h-5 text-primary-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Interest Credit</p>
+                                        <p class="text-xs text-neutral-500">Sep 20, 2024 · 12:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-primary-600">+₦1,100</p>
+                                    <span class="text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full">Interest</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between px-5 py-4 hover:bg-neutral-50 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                                        <i data-lucide="arrow-down-left" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-neutral-900">Daily Contribution</p>
+                                        <p class="text-xs text-neutral-500">Sep 15, 2024 · 9:00 AM</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold text-green-600">+₦2,000</p>
+                                    <span class="text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="p-5 text-center border-t border-neutral-100">
+                        <button class="text-sm text-primary-600 font-medium hover:text-primary-700 flex items-center gap-2 mx-auto">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Load More Transactions
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Mobile Bottom Nav -->
+            <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-100 z-40 flex">
+                <button onclick="navigateTo('dashboard')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="layout-dashboard" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Home</span>
+                </button>
+                <button onclick="navigateTo('history')" class="nav-item active-nav flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="history" class="nav-icon w-5 h-5 text-primary-600"></i>
+                    <span class="nav-label text-xs text-primary-600 font-semibold">History</span>
+                </button>
+                <button onclick="navigateTo('withdrawal')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="arrow-up-from-line" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Withdraw</span>
+                </button>
+                <button class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="settings" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Settings</span>
+                </button>
+            </nav>
+        </main>
+    </div>
+</div>
+
+<!-- ===================== WITHDRAWAL PAGE ===================== -->
+<div id="page-withdrawal" class="page">
+    <div class="flex bg-neutral-50" style="min-height: 100vh;">
+
+        <!-- Sidebar (Desktop) -->
+        <aside class="hidden lg:flex w-64 bg-white border-r border-neutral-100 flex-col" style="min-height: 100vh;">
+            <div class="p-6 border-b border-neutral-100">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 bg-primary-600 rounded-small flex items-center justify-center">
+                        <i data-lucide="wallet" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="font-heading text-xl font-bold text-primary-900">Great Grace Investment</span>
+                </div>
+            </div>
+            <nav class="flex-1 p-4 space-y-1">
+                <a href="#" onclick="navigateTo('dashboard'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+                </a>
+                <a href="#" onclick="navigateTo('history'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="history" class="w-5 h-5"></i> Savings History
+                </a>
+                <a href="#" onclick="navigateTo('withdrawal'); return false;" class="flex items-center gap-3 px-4 py-3 rounded-small bg-primary-50 text-primary-700 font-medium text-sm">
+                    <i data-lucide="arrow-up-from-line" class="w-5 h-5"></i> Withdraw Funds
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-small text-neutral-600 hover:bg-neutral-50 font-medium text-sm transition-colors">
+                    <i data-lucide="settings" class="w-5 h-5"></i> Settings
+                </a>
+            </nav>
+            <div class="p-4 border-t border-neutral-100">
+                <div class="flex items-center gap-3 p-3 rounded-large bg-neutral-50">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&crop=face" class="w-10 h-10 rounded-full object-cover" alt="user">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-neutral-900 truncate user-name">Ada Okonkwo</p>
+                        <p class="text-xs text-neutral-500 truncate user-email">ada@example.com</p>
+                    </div>
+                    <button onclick="navigateTo('auth')" class="text-neutral-400 hover:text-neutral-600">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col pb-20 lg:pb-0">
+            <header class="bg-white border-b border-neutral-100 px-6 py-4 flex items-center gap-4 sticky top-0 z-30">
+                <button onclick="navigateTo('dashboard')" class="lg:hidden w-9 h-9 rounded-full bg-neutral-50 flex items-center justify-center text-neutral-600">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <div>
+                    <h1 class="font-heading text-xl font-bold text-neutral-900">Withdraw Funds</h1>
+                    <p class="text-xs text-neutral-500">Transfer your savings to any bank account</p>
+                </div>
+            </header>
+
+            <div class="flex-1 p-4 md:p-6 lg:p-8 fade-in">
+                <div class="max-w-2xl mx-auto space-y-6">
+
+                    <!-- Step Indicator -->
+                    <div class="flex items-center justify-center gap-0 mb-2">
+                        <div class="flex flex-col items-center">
+                            <div id="step-dot-1" class="step-dot done w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
+                            <span class="text-xs text-primary-700 font-medium mt-1">Amount</span>
+                        </div>
+                        <div id="step-line-1" class="step-line done h-0.5 w-16 sm:w-24 mb-4"></div>
+                        <div class="flex flex-col items-center">
+                            <div id="step-dot-2" class="step-dot active w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                            <span class="text-xs text-primary-700 font-medium mt-1">Bank</span>
+                        </div>
+                        <div id="step-line-2" class="step-line pending h-0.5 w-16 sm:w-24 mb-4"></div>
+                        <div class="flex flex-col items-center">
+                            <div id="step-dot-3" class="step-dot pending w-8 h-8 rounded-full flex items-center justify-center text-neutral-400 text-xs font-bold">3</div>
+                            <span class="text-xs text-neutral-400 font-medium mt-1">Confirm</span>
+                        </div>
+                    </div>
+
+                    <!-- Available Balance Card -->
+                    <div class="bg-gradient-to-r from-primary-700 to-primary-500 rounded-large p-5 text-white flex items-center justify-between">
+                        <div>
+                            <p class="text-primary-200 text-sm">Available Balance</p>
+                            <p class="font-heading text-3xl font-bold mt-0.5">₦450,000</p>
+                        </div>
+                        <div class="bg-white/15 rounded-large p-3">
+                            <i data-lucide="wallet" class="w-7 h-7 text-white"></i>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Amount -->
+                    <div id="withdraw-step-1" class="bg-white rounded-large p-6 shadow-custom">
+                        <h3 class="font-heading font-bold text-neutral-900 mb-1">Withdrawal Amount</h3>
+                        <p class="text-sm text-neutral-500 mb-5">Enter the amount you'd like to withdraw</p>
+
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium text-neutral-700 mb-2">Amount (₦)</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 font-semibold text-lg">₦</span>
+                                <input type="number" id="withdraw-amount" placeholder="0.00" class="w-full pl-10 pr-4 py-4 border border-neutral-200 rounded-small text-2xl font-heading font-bold text-neutral-900 bg-neutral-50 focus:bg-white transition-all" oninput="updateWithdrawSummary()">
+                            </div>
+                        </div>
+
+                        <!-- Quick Amount Buttons -->
+                        <div class="mb-5">
+                            <p class="text-xs text-neutral-500 mb-2">Quick select</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="setAmount(5000)" class="px-4 py-2 border border-neutral-200 rounded-small text-sm font-medium text-neutral-700 hover:border-primary-400 hover:bg-primary-50 hover:text-primary-700 transition-all">₦5,000</button>
+                                <button onclick="setAmount(10000)" class="px-4 py-2 border border-neutral-200 rounded-small text-sm font-medium text-neutral-700 hover:border-primary-400 hover:bg-primary-50 hover:text-primary-700 transition-all">₦10,000</button>
+                                <button onclick="setAmount(20000)" class="px-4 py-2 border border-neutral-200 rounded-small text-sm font-medium text-neutral-700 hover:border-primary-400 hover:bg-primary-50 hover:text-primary-700 transition-all">₦20,000</button>
+                                <button onclick="setAmount(50000)" class="px-4 py-2 border border-neutral-200 rounded-small text-sm font-medium text-neutral-700 hover:border-primary-400 hover:bg-primary-50 hover:text-primary-700 transition-all">₦50,000</button>
+                                <button onclick="setAmount(450000)" class="px-4 py-2 border border-primary-200 rounded-small text-sm font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 transition-all">Max</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-100 rounded-small p-3 flex items-start gap-2">
+                            <i data-lucide="info" class="w-4 h-4 text-amber-500 shrink-0 mt-0.5"></i>
+                            <p class="text-xs text-amber-700">Early withdrawal before cycle completion may affect your interest earnings. <a href="#" class="font-semibold underline">Learn more</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Bank Account Selection -->
+                    <div id="withdraw-step-2" class="bg-white rounded-large p-6 shadow-custom">
+                        <h3 class="font-heading font-bold text-neutral-900 mb-1">Select Bank Account</h3>
+                        <p class="text-sm text-neutral-500 mb-5">Choose where to send your funds</p>
+
+                        <!-- Saved Accounts -->
+                        <div class="space-y-3 mb-5">
+                            <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Saved Accounts</p>
+
+                            <div onclick="selectBank(this)" class="bank-card selected flex items-center gap-4 p-4 border-2 border-primary-600 bg-primary-50 rounded-large cursor-pointer transition-all">
+                                <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="GTBank">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-neutral-900">Guaranty Trust Bank (GTBank)</p>
+                                    <p class="text-xs text-neutral-500">**** **** **** 4521 · Ada Okonkwo</p>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-primary-600 bg-primary-600 flex items-center justify-center shrink-0">
+                                    <i data-lucide="check" class="w-3 h-3 text-white"></i>
+                                </div>
+                            </div>
+
+                            <div onclick="selectBank(this)" class="bank-card flex items-center gap-4 p-4 border-2 border-neutral-200 rounded-large cursor-pointer hover:border-primary-300 hover:bg-primary-50/30 transition-all">
+                                <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Access Bank">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-neutral-900">Access Bank</p>
+                                    <p class="text-xs text-neutral-500">**** **** **** 8834 · Ada Okonkwo</p>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-neutral-300 shrink-0"></div>
+                            </div>
+
+                            <div onclick="selectBank(this)" class="bank-card flex items-center gap-4 p-4 border-2 border-neutral-200 rounded-large cursor-pointer hover:border-primary-300 hover:bg-primary-50/30 transition-all">
+                                <div class="w-12 h-12 bg-white rounded-small flex items-center justify-center shadow-sm shrink-0">
+                                    <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=48&h=48&fit=crop" class="w-8 h-8 rounded object-cover" alt="Opay">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-neutral-900">OPay (Mobile Money)</p>
+                                    <p class="text-xs text-neutral-500">**** **** **** 2290 · Ada Okonkwo</p>
+                                </div>
+                                <div class="w-5 h-5 rounded-full border-2 border-neutral-300 shrink-0"></div>
+                            </div>
+                        </div>
+
+                        <!-- Add New Account -->
+                        <div>
+                            <p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Add New Account</p>
+                            <div class="border-2 border-dashed border-neutral-200 rounded-large p-4 space-y-4" id="new-account-form">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-neutral-700 mb-1.5">Bank Name</label>
+                                        <select class="w-full px-3 py-2.5 border border-neutral-200 rounded-small text-sm text-neutral-700 bg-neutral-50 focus:bg-white transition-all">
+                                            <option value="">Select Bank</option>
+                                            <optgroup label="Commercial Banks">
+                                                <option>Access Bank</option>
+                                                <option>Citibank Nigeria</option>
+                                                <option>Ecobank Nigeria</option>
+                                                <option>Fidelity Bank</option>
+                                                <option>First Bank of Nigeria</option>
+                                                <option>First City Monument Bank (FCMB)</option>
+                                                <option>Guaranty Trust Bank (GTBank)</option>
+                                                <option>Heritage Bank</option>
+                                                <option>Keystone Bank</option>
+                                                <option>Polaris Bank</option>
+                                                <option>Stanbic IBTC Bank</option>
+                                                <option>Standard Chartered Bank</option>
+                                                <option>Sterling Bank</option>
+                                                <option>Union Bank of Nigeria</option>
+                                                <option>United Bank for Africa (UBA)</option>
+                                                <option>Unity Bank</option>
+                                                <option>Wema Bank</option>
+                                                <option>Zenith Bank</option>
+                                            </optgroup>
+                                            <optgroup label="Microfinance Banks">
+                                                <option>Kuda Bank</option>
+                                                <option>VFD Microfinance Bank</option>
+                                                <option>Renmoney Microfinance</option>
+                                                <option>Accion Microfinance Bank</option>
+                                            </optgroup>
+                                            <optgroup label="Mobile Money / Fintech">
+                                                <option>OPay</option>
+                                                <option>PalmPay</option>
+                                                <option>Moniepoint</option>
+                                                <option>Carbon (Paylater)</option>
+                                                <option>Piggyvest</option>
+                                                <option>Cowrywise</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-neutral-700 mb-1.5">Account Type</label>
+                                        <select class="w-full px-3 py-2.5 border border-neutral-200 rounded-small text-sm text-neutral-700 bg-neutral-50 focus:bg-white transition-all">
+                                            <option>Savings Account</option>
+                                            <option>Current Account</option>
+                                            <option>Mobile Wallet</option>
+                                            <option>Corporate Account</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-neutral-700 mb-1.5">Account Number</label>
+                                    <input type="text" placeholder="Enter 10-digit account number" maxlength="10" class="w-full px-3 py-2.5 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-neutral-700 mb-1.5">Account Name</label>
+                                    <input type="text" placeholder="Account name will appear here" class="w-full px-3 py-2.5 border border-neutral-200 rounded-small text-sm bg-neutral-50 focus:bg-white transition-all text-neutral-500" readonly>
+                                </div>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 accent-primary-600 rounded">
+                                    <span class="text-xs text-neutral-600">Save this account for future withdrawals</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Confirmation Summary -->
+                    <div id="withdraw-step-3" class="bg-white rounded-large p-6 shadow-custom">
+                        <h3 class="font-heading font-bold text-neutral-900 mb-1">Confirm Withdrawal</h3>
+                        <p class="text-sm text-neutral-500 mb-5">Review your withdrawal details before proceeding</p>
+
+                        <div class="bg-neutral-50 rounded-large p-4 space-y-3 mb-5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-neutral-500">Withdrawal Amount</span>
+                                <span id="summary-amount" class="text-sm font-bold text-neutral-900">₦0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-neutral-500">Transaction Fee</span>
+                                <span class="text-sm font-medium text-green-600">Free</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-neutral-500">Destination</span>
+                                <span class="text-sm font-medium text-neutral-900">GTBank · ****4521</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-neutral-500">Processing Time</span>
+                                <span class="text-sm font-medium text-neutral-900">Instant</span>
+                            </div>
+                            <div class="border-t border-neutral-200 pt-3 flex justify-between items-center">
+                                <span class="text-sm font-semibold text-neutral-700">You'll Receive</span>
+                                <span id="summary-receive" class="text-base font-bold text-primary-700">₦0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- PIN Entry -->
+                        <div class="mb-5">
+                            <label class="block text-sm font-medium text-neutral-700 mb-2">Enter Transaction PIN</label>
+                            <div class="flex gap-3 justify-center">
+                                <input id="pin1" type="password" maxlength="1" class="w-12 h-12 text-center text-xl font-bold border-2 border-neutral-200 rounded-small focus:border-primary-500 bg-neutral-50 focus:bg-white transition-all" oninput="moveFocus(this, 'pin2')">
+                                <input type="password" maxlength="1" id="pin2" class="w-12 h-12 text-center text-xl font-bold border-2 border-neutral-200 rounded-small focus:border-primary-500 bg-neutral-50 focus:bg-white transition-all" oninput="moveFocus(this, 'pin3')">
+                                <input type="password" maxlength="1" id="pin3" class="w-12 h-12 text-center text-xl font-bold border-2 border-neutral-200 rounded-small focus:border-primary-500 bg-neutral-50 focus:bg-white transition-all" oninput="moveFocus(this, 'pin4')">
+                                <input type="password" maxlength="1" id="pin4" class="w-12 h-12 text-center text-xl font-bold border-2 border-neutral-200 rounded-small focus:border-primary-500 bg-neutral-50 focus:bg-white transition-all">
+                            </div>
+                        </div>
+
+                        <button onclick="processWithdrawal()" class="w-full py-4 bg-primary-600 text-white rounded-small font-semibold hover:bg-primary-700 transition-all shadow-custom hover:shadow-custom-hover flex items-center justify-center gap-2 text-base">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Confirm Withdrawal
+                        </button>
+
+                        <p class="text-center text-xs text-neutral-400 mt-3 flex items-center justify-center gap-1">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                            Secured with 256-bit encryption
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Mobile Bottom Nav -->
+            <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-100 z-40 flex">
+                <button onclick="navigateTo('dashboard')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="layout-dashboard" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Home</span>
+                </button>
+                <button onclick="navigateTo('history')" class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="history" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">History</span>
+                </button>
+                <button onclick="navigateTo('withdrawal')" class="nav-item active-nav flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="arrow-up-from-line" class="nav-icon w-5 h-5 text-primary-600"></i>
+                    <span class="nav-label text-xs text-primary-600 font-semibold">Withdraw</span>
+                </button>
+                <button class="nav-item flex-1 flex flex-col items-center py-3 gap-1">
+                    <i data-lucide="settings" class="nav-icon w-5 h-5 text-neutral-400"></i>
+                    <span class="nav-label text-xs text-neutral-400">Settings</span>
+                </button>
+            </nav>
+        </main>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[32px] p-8 max-w-sm w-full text-center shadow-2xl fade-in">
+        <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="check-circle-2" class="w-10 h-10 text-green-500"></i>
+        </div>
+        <h3 class="font-heading text-2xl font-bold text-neutral-900 mb-2">Withdrawal Successful!</h3>
+        <p class="text-neutral-500 mb-2">Your funds have been sent to</p>
+        <p class="font-semibold text-neutral-900 mb-1">GTBank · ****4521</p>
+        <p class="text-3xl font-heading font-bold text-primary-700 mb-6" id="modal-amount">₦0.00</p>
+        <p class="text-xs text-neutral-400 mb-6">Transaction ID: GGI-2024-78432</p>
+        <div class="flex gap-3">
+            <button onclick="closeModal()" class="flex-1 py-3 border border-neutral-200 rounded-small text-sm font-semibold text-neutral-700 hover:bg-neutral-50 transition-colors">
+                View History
+            </button>
+            <button onclick="closeModal()" class="flex-1 py-3 bg-primary-600 text-white rounded-small text-sm font-semibold hover:bg-primary-700 transition-colors">
+                Done
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    function navigateTo(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + page).classList.add('active');
+        window.scrollTo(0, 0);
+        lucide.createIcons();
+        if (page === 'dashboard') initChart();
+    }
+
+    // Update UI with the given user name and email
+    function updateUserDisplay(fullName, email) {
+        document.querySelectorAll('.user-name').forEach(el => el.textContent = fullName || 'User');
+        document.querySelectorAll('.user-email').forEach(el => el.textContent = email || '');
+        const first = (fullName || '').split(' ')[0] || '';
+        const capFirst = first ? (first.charAt(0).toUpperCase() + first.slice(1)) : 'User';
+        const g = document.getElementById('greeting-name');
+        if (g) g.textContent = capFirst;
+    }
+
+    function signIn() {
+        try {
+            const email = (document.getElementById('signin-email') || {}).value || '';
+            const password = (document.getElementById('signin-password') || {}).value || '';
+            console.log('signIn() called with', { email, passwordProvided: !!password });
+            if (!email || !password) {
+                alert('Please enter both email and password.');
+                return;
+            }
+            // Derive a simple display name from the email local-part
+            const namePart = email.split('@')[0].split(/[._-]/)[0] || 'User';
+            const fullName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            updateUserDisplay(fullName, email);
+            navigateTo('dashboard');
+        } catch (err) {
+            console.error('Error in signIn():', err);
+            alert('An error occurred during sign in. Check the console for details.');
+        }
+    }
+
+    function createAccount() {
+        const first = (document.getElementById('signup-first') || {}).value || '';
+        const last = (document.getElementById('signup-last') || {}).value || '';
+        const email = (document.getElementById('signup-email') || {}).value || '';
+        const fullName = (first || last) ? (first + (last ? ' ' + last : '')) : (email ? email.split('@')[0] : 'User');
+        updateUserDisplay(fullName, email);
+        navigateTo('dashboard');
+    }
+
+    function switchAuthTab(tab) {
+        document.getElementById('form-signin').classList.toggle('hidden', tab !== 'signin');
+        document.getElementById('form-signup').classList.toggle('hidden', tab !== 'signup');
+        document.getElementById('tab-signin').classList.toggle('active-tab', tab === 'signin');
+        document.getElementById('tab-signup').classList.toggle('active-tab', tab === 'signup');
+        document.getElementById('tab-signin').classList.toggle('text-neutral-500', tab !== 'signin');
+        document.getElementById('tab-signup').classList.toggle('text-neutral-500', tab !== 'signup');
+    }
+
+    function selectBank(el) {
+        document.querySelectorAll('.bank-card').forEach(card => {
+            card.classList.remove('selected');
+            card.classList.remove('border-primary-600', 'bg-primary-50');
+            card.classList.add('border-neutral-200');
+            const dot = card.querySelector('.w-5.h-5.rounded-full');
+            if (dot) {
+                dot.classList.remove('border-primary-600', 'bg-primary-600');
+                dot.classList.add('border-neutral-300');
+                dot.innerHTML = '';
+            }
+        });
+        el.classList.add('selected', 'border-primary-600', 'bg-primary-50');
+        el.classList.remove('border-neutral-200');
+        const dot = el.querySelector('.w-5.h-5.rounded-full');
+        if (dot) {
+            dot.classList.add('border-primary-600', 'bg-primary-600');
+            dot.classList.remove('border-neutral-300');
+            dot.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        }
+    }
+
+    function setAmount(val) {
+        document.getElementById('withdraw-amount').value = val;
+        updateWithdrawSummary();
+    }
+
+    function updateWithdrawSummary() {
+        const val = parseFloat(document.getElementById('withdraw-amount').value) || 0;
+        const formatted = '₦' + val.toLocaleString('en-NG', { minimumFractionDigits: 2 });
+        document.getElementById('summary-amount').textContent = formatted;
+        document.getElementById('summary-receive').textContent = formatted;
+    }
+
+    function moveFocus(el, nextId) {
+        if (el.value.length >= 1 && nextId) {
+            const next = document.getElementById(nextId);
+            if (next) next.focus();
+        }
+    }
+
+    function processWithdrawal() {
+        // Require transaction PIN
+        const storedPin = localStorage.getItem('txn_pin');
+        if(!storedPin){
+            alert('Please set a transaction PIN before withdrawing.');
+            const el = document.getElementById('new-txn-pin');
+            if(el) el.focus();
+            return;
+        }
+        const p1 = (document.getElementById('pin1') || {}).value || '';
+        const p2 = (document.getElementById('pin2') || {}).value || '';
+        const p3 = (document.getElementById('pin3') || {}).value || '';
+        const p4 = (document.getElementById('pin4') || {}).value || '';
+        const entered = p1 + p2 + p3 + p4;
+        if(entered.length < 4) return alert('Enter your 4-digit transaction PIN');
+        if(entered !== storedPin) {
+            alert('Incorrect PIN. Please try again.');
+            // clear inputs
+            ['pin1','pin2','pin3','pin4'].forEach(id => { const e = document.getElementById(id); if(e) e.value = '' });
+            document.getElementById('pin1').focus();
+            return;
+        }
+
+        const val = parseFloat(document.getElementById('withdraw-amount').value) || 0;
+        const formatted = '₦' + val.toLocaleString('en-NG', { minimumFractionDigits: 2 });
+        document.getElementById('modal-amount').textContent = formatted;
+        document.getElementById('success-modal').classList.remove('hidden');
+        lucide.createIcons();
+    }
+
+    function closeModal() {
+        document.getElementById('success-modal').classList.add('hidden');
+        navigateTo('history');
+    }
+
+    let chartInstance = null;
+    function initChart() {
+        const ctx = document.getElementById('savingsChart');
+        if (!ctx) return;
+        if (chartInstance) { chartInstance.destroy(); }
+        chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Daily Savings',
+                    data: [2000, 4000, 6000, 8000, 10000, 12000, 14000],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124,58,237,0.08)',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#7c3aed',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#a3a3a3' } },
+                    y: {
+                        grid: { color: '#f5f5f5' },
+                        ticks: {
+                            font: { size: 11 }, color: '#a3a3a3',
+                            callback: v => '₦' + (v/1000).toFixed(0) + 'k'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    // Referral feature (client-side demo)
+    function formatCurrency(n){ return '₦' + Number(n).toLocaleString(); }
+
+    function initReferral(){
+        try {
+            let code = localStorage.getItem('referral_code');
+            if(!code){
+                code = 'AJ' + Math.random().toString(36).substring(2,8).toUpperCase();
+                localStorage.setItem('referral_code', code);
+            }
+            const codeEl = document.getElementById('ref-code');
+            const linkEl = document.getElementById('ref-link');
+            const earnEl = document.getElementById('ref-earnings');
+            if(codeEl) codeEl.textContent = code;
+            if(linkEl) linkEl.value = (location.origin + location.pathname + '?ref=' + encodeURIComponent(code));
+            const earnings = parseFloat(localStorage.getItem('referral_earnings') || '0');
+            if(earnEl) earnEl.textContent = formatCurrency(earnings);
+        } catch (e) {
+            console.error('initReferral error', e);
+        }
+    }
+
+    // Transaction PIN management (client-side demo)
+    function updatePinStatus(){
+        const exists = !!localStorage.getItem('txn_pin');
+        const statusEl = document.getElementById('pin-status');
+        if(statusEl) statusEl.textContent = exists ? 'Set' : 'Not Set';
+    }
+
+    function setTransactionPin(){
+        const a = (document.getElementById('new-txn-pin') || {}).value || '';
+        const b = (document.getElementById('confirm-txn-pin') || {}).value || '';
+        if(!/^[0-9]{4}$/.test(a)) return alert('Enter a 4-digit PIN');
+        if(a !== b) return alert('PINs do not match');
+        localStorage.setItem('txn_pin', a);
+        updatePinStatus();
+        alert('Transaction PIN set');
+        document.getElementById('new-txn-pin').value = '';
+        document.getElementById('confirm-txn-pin').value = '';
+    }
+
+    function clearTransactionPin(){
+        localStorage.removeItem('txn_pin');
+        updatePinStatus();
+        alert('Transaction PIN cleared');
+    }
+
+
+    function copyReferralCode(){
+        const el = document.getElementById('ref-code');
+        if(!el) return alert('Referral code not available');
+        navigator.clipboard.writeText(el.textContent || '').then(()=> alert('Referral code copied')).catch(()=> alert('Copy not supported'));
+    }
+
+    function copyReferralLink(){
+        const el = document.getElementById('ref-link');
+        if(!el) return alert('Referral link not available');
+        navigator.clipboard.writeText(el.value || '').then(()=> alert('Referral link copied')).catch(()=> alert('Copy not supported'));
+    }
+
+    function shareReferral(platform){
+        const link = encodeURIComponent((document.getElementById('ref-link') || {}).value || location.href);
+        const text = encodeURIComponent('Join Great Grace Investment and earn with my referral!');
+        let shareUrl = '';
+        if(platform === 'whatsapp') shareUrl = `https://wa.me/?text=${text}%20${link}`;
+        if(platform === 'twitter') shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${link}`;
+        if(platform === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
+        if(shareUrl) window.open(shareUrl, '_blank');
+    }
+
+    function simulateReferral(){
+        const bonus = 100; // simulate ₦100 per referral
+        const cur = parseFloat(localStorage.getItem('referral_earnings') || '0');
+        const next = cur + bonus;
+        localStorage.setItem('referral_earnings', next);
+        const el = document.getElementById('ref-earnings');
+        if(el) el.textContent = formatCurrency(next);
+        alert('Simulated referral used — earnings updated');
+    }
+
+    // Top Up modal handling
+    function openTopUp(){
+        try{
+            const acc = '7030323209 OPAY';
+            document.getElementById('topup-account').textContent = acc;
+            // generate a simple reference for the top up session
+            const ref = 'GGI-TU-' + Math.random().toString(36).substring(2,8).toUpperCase();
+            const refEl = document.getElementById('topup-ref');
+            if(refEl) refEl.textContent = ref;
+            document.getElementById('topup-modal').classList.remove('hidden');
+        }catch(e){ console.error('openTopUp error', e); }
+    }
+
+    function closeTopUp(){
+        const el = document.getElementById('topup-modal');
+        if(el) el.classList.add('hidden');
+    }
+
+    function copyTopUpAccount(){
+        const acc = document.getElementById('topup-account');
+        if(!acc) return alert('Account not available');
+        navigator.clipboard.writeText(acc.textContent || '').then(()=> alert('Account copied')).catch(()=> alert('Copy not supported'));
+    }
+
+    // Profile save/load (client-side demo)
+    function loadProfileToForm(){
+        try {
+            const full = localStorage.getItem('user_fullname') || '';
+            const email = localStorage.getItem('user_email') || '';
+            const phone = localStorage.getItem('user_phone') || '';
+            const fEl = document.getElementById('profile-fullname');
+            const eEl = document.getElementById('profile-email');
+            const pEl = document.getElementById('profile-phone');
+            if(fEl) fEl.value = full;
+            if(eEl) eEl.value = email;
+            if(pEl) pEl.value = phone;
+        } catch(e){ console.error('loadProfileToForm error', e); }
+    }
+
+    function saveProfile(){
+        const full = (document.getElementById('profile-fullname') || {}).value || '';
+        const email = (document.getElementById('profile-email') || {}).value || '';
+        const phone = (document.getElementById('profile-phone') || {}).value || '';
+        if(!full) return alert('Please enter your full name');
+        if(!email) return alert('Please enter your email');
+        localStorage.setItem('user_fullname', full);
+        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_phone', phone);
+        updateUserDisplay(full, email);
+        alert('Profile saved');
+    }
+
+    // Update header date to current localized date
+    function setHeaderDate(){
+        try{
+            const el = document.getElementById('header-date');
+            if(!el) return;
+            const now = new Date();
+            const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            el.textContent = new Intl.DateTimeFormat('en-GB', opts).format(now);
+        }catch(e){ console.error('setHeaderDate error', e); }
+    }
+
+    // Reset login password (client-side demo)
+    function resetLoginPassword(){
+        const email = (document.getElementById('reset-email') || {}).value || '';
+        if(!email) return alert('Please enter your email address');
+        // In a real app this would call the backend to send a reset email
+        alert('If an account exists for ' + email + ', a reset link has been sent.');
+        document.getElementById('reset-email').value = '';
+    }
+
+    // Sign out (client-side demo)
+    function signOut(){
+        // Clear simple client-side state and return to auth page
+        localStorage.removeItem('txn_pin');
+        // leave referral code intact, but clear user display info
+        updateUserDisplay('','');
+        navigateTo('auth');
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){ initReferral(); updatePinStatus(); loadProfileToForm(); setHeaderDate(); });
+
+    // Init on load
+    window.addEventListener('load', () => {
+        lucide.createIcons();
+        initChart();
+    });
+</script>
+</body>
+</html>
